@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vivek ❤️ Manisha Wedding Invitation</title>
+    <meta name="description" content="Join us to celebrate the wedding of Vivek & Manisha on 13th December 2026 at Nature Resort, Kamla Nagar, Agra.">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="day-mode">
+    <!-- Royal Welcome Overlay (Guarantees Autoplay on First Click/Tap) -->
+    <div id="welcome-overlay" class="welcome-overlay">
+        <div class="welcome-card">
+            <div class="welcome-crest">
+                <img src="Assets/ganesha.png" alt="Shree Ganesha" class="welcome-ganesha">
+            </div>
+            <p class="welcome-shloka">|| श्री गणेशाय नमः ||</p>
+            <p class="welcome-invite-text">You are cordially invited to celebrate the wedding of</p>
+            <h1 class="welcome-couple">Vivek <span>&amp;</span> Manisha</h1>
+            <p class="welcome-date"><i class="fas fa-calendar-alt"></i> 13th December 2026 &nbsp;•&nbsp; Nature Resort, Agra</p>
+            <div class="welcome-divider"></div>
+            <button id="open-invite-btn" class="welcome-btn">
+                <i class="fas fa-envelope-open-text"></i> Open Invitation 🎵
+            </button>
+            <p class="welcome-hint">Tap anywhere to enter with wedding music</p>
+        </div>
+    </div>
+
+    <!-- Visual Effects Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Background Music -->
+    <audio id="wedding-music" loop autoplay preload="auto" playsinline src="Assets/my_wedding_song.mp3">
+        <source src="Assets/my_wedding_song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Controls -->
+    <div class="controls-group">
+        <button id="theme-toggle" class="floating-btn" title="Toggle Day/Night Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button id="music-toggle" class="floating-btn" title="Play/Pause Music">
+            <i class="fas fa-music"></i>
+        </button>
+    </div>
+
+    <!-- 1. Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <img src="Assets/ganesha.png" alt="Lord Ganesha" class="ganesha-icon">
+            <div class="couple-portraits">
+                <div class="portrait-container groom-side">
+                    <img src="Assets/Groom.jpg" alt="Vivek (Groom)" class="portrait">
+                    <h3>Vivek</h3>
+                </div>
+                <div class="weds-container">
+                    <span class="weds-text">Weds</span>
+                </div>
+                <div class="portrait-container bride-side">
+                    <img src="Assets/Bride.jpg" alt="Manisha (Bride)" class="portrait">
+                    <h3>Manisha</h3>
+                </div>
+            </div>
+            <div class="hero-text">
+                <p class="invite-msg">Together with their families, cordially invite you to celebrate their wedding.</p>
+                <h1>Vivek & Manisha</h1>
+                <h3 class="wedding-date-header">13th December 2026</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Wedding Countdown -->
+    <section id="countdown" class="countdown-section">
+        <div class="countdown-ornament">
+            <span class="orn-line"></span>
+            <div class="ring-3d-wrapper">
+                <div class="ring-3d"></div>
+            </div>
+            <span class="orn-line"></span>
+        </div>
+        <h2 class="section-title">The Big Day Awaits</h2>
+        <p class="countdown-sub">13th December 2026 &nbsp;•&nbsp; Nature Resort, Agra</p>
+        <div id="timer" class="timer-container">
+
+            <div class="time-box">
+                <div class="flip-card">
+                    <div class="flip-upper"><span id="days">00</span></div>
+                    <div class="flip-divider"></div>
+                    <div class="flip-lower"><span id="days-ghost">00</span></div>
+                </div>
+                <p class="time-label"><i class="fas fa-calendar-alt"></i> Days</p>
+            </div>
+
+            <div class="time-sep"><span></span><span></span></div>
+
+            <div class="time-box">
+                <div class="flip-card">
+                    <div class="flip-upper"><span id="hours">00</span></div>
+                    <div class="flip-divider"></div>
+                    <div class="flip-lower"><span id="hours-ghost">00</span></div>
+                </div>
+                <p class="time-label"><i class="fas fa-clock"></i> Hours</p>
+            </div>
+
+            <div class="time-sep"><span></span><span></span></div>
+
+            <div class="time-box">
+                <div class="flip-card">
+                    <div class="flip-upper"><span id="minutes">00</span></div>
+                    <div class="flip-divider"></div>
+                    <div class="flip-lower"><span id="minutes-ghost">00</span></div>
+                </div>
+                <p class="time-label"><i class="fas fa-hourglass-half"></i> Minutes</p>
+            </div>
+
+            <div class="time-sep"><span></span><span></span></div>
+
+            <div class="time-box">
+                <div class="flip-card" id="seconds-card">
+                    <div class="flip-upper"><span id="seconds">00</span></div>
+                    <div class="flip-divider"></div>
+                    <div class="flip-lower"><span id="seconds-ghost">00</span></div>
+                </div>
+                <p class="time-label"><i class="fas fa-stopwatch"></i> Seconds</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. Family Section -->
+    <section id="family" class="family-section">
+        <div class="family-ornament">
+            <span class="orn-line"></span>
+            <i class="fas fa-om orn-icon"></i>
+            <span class="orn-line"></span>
+        </div>
+        <h2 class="section-title">Our Families</h2>
+        <p class="family-section-sub">परम आदरणीय परिवार • With the Divine Blessings of Our Ancestors &amp; Elders</p>
+
+        <div class="family-grid">
+
+            <!-- Groom's Family -->
+            <div class="family-card reveal-left">
+                <div class="family-card-header groom-header">
+                    <div class="card-crest">
+                        <i class="fas fa-crown family-crown-icon"></i>
+                    </div>
+                    <h3>Groom's Family</h3>
+                    <p class="family-subtitle">चौहान परिवार • Chauhan Parivar</p>
+                </div>
+
+                <div class="family-card-body">
+                    <!-- Parents -->
+                    <div class="member-group">
+                        <div class="group-title">
+                            <span class="group-dot"></span>
+                            <h4>Parents • पूज्य माता-पिता</h4>
+                        </div>
+                        <div class="family-member">
+                            <div class="member-meta">
+                                <span class="relation">Father • पिता</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Mr. N.S. Chauhan</span>
+                            </div>
+                        </div>
+                        <div class="family-member">
+                            <div class="member-meta">
+                                <span class="relation">Mother • माता</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Mrs. Usha Chauhan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="family-divider"></div>
+
+                    <!-- Departed Elders -->
+                    <div class="member-group">
+                        <div class="group-title late-title">
+                            <span class="group-dot late-dot"></span>
+                            <h4>In Loving Memory • स्वर्गवासी पूज्य पूर्वज</h4>
+                        </div>
+                        <div class="family-member is-late">
+                            <div class="member-meta">
+                                <span class="relation">दादा जी • Dada Ji</span>
+                                <span class="late-tag">स्व.</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Late Shri Raghu Raj Singh Chauhan</span>
+                            </div>
+                        </div>
+                        <div class="family-member is-late">
+                            <div class="member-meta">
+                                <span class="relation">दादी जी • Dadi Ji</span>
+                                <span class="late-tag">स्व.</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Late Smt. Bhu Devi</span>
+                            </div>
+                        </div>
+                        <div class="family-member is-late">
+                            <div class="member-meta">
+                                <span class="relation">नाना जी • Nana Ji</span>
+                                <span class="late-tag">स्व.</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Late Shri Arjun Singh</span>
+                            </div>
+                        </div>
+                        <div class="family-member is-late">
+                            <div class="member-meta">
+                                <span class="relation">नानी जी • Nani Ji</span>
+                                <span class="late-tag">स्व.</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Late Smt. Sita Devi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bride's Family -->
+            <div class="family-card reveal-right">
+                <div class="family-card-header bride-header">
+                    <div class="card-crest">
+                        <i class="fas fa-gem family-crown-icon"></i>
+                    </div>
+                    <h3>Bride's Family</h3>
+                    <p class="family-subtitle">सिसोदिया परिवार • Sisodiya Parivar</p>
+                </div>
+
+                <div class="family-card-body">
+                    <!-- Parents -->
+                    <div class="member-group">
+                        <div class="group-title">
+                            <span class="group-dot"></span>
+                            <h4>Parents • पूज्य माता-पिता</h4>
+                        </div>
+                        <div class="family-member">
+                            <div class="member-meta">
+                                <span class="relation">Father • पिता</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Mr. Devendra Singh Sisodiya</span>
+                            </div>
+                        </div>
+                        <div class="family-member">
+                            <div class="member-meta">
+                                <span class="relation">Mother • माता</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Mrs. Sudha Sisodiya</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="family-divider"></div>
+
+                    <!-- Grandparents -->
+                    <div class="member-group">
+                        <div class="group-title">
+                            <span class="group-dot"></span>
+                            <h4>Grandparents • पूज्य दादा-दादी जी</h4>
+                        </div>
+                        <div class="family-member is-late">
+                            <div class="member-meta">
+                                <span class="relation">दादा जी • Dada Ji</span>
+                                <span class="late-tag">स्व.</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Late Sh. Ranveer Singh Sisodiya</span>
+                            </div>
+                        </div>
+                        <div class="family-member">
+                            <div class="member-meta">
+                                <span class="relation">दादी जी • Dadi Ji</span>
+                            </div>
+                            <div class="member-name-wrap">
+                                <span class="member-name">Smt. Bhoo Devi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Auspicious Blessing Shloka for Balance & Elegance -->
+                    <div class="family-card-blessing">
+                        <div class="blessing-icon"><i class="fas fa-hands-praying"></i></div>
+                        <p class="blessing-shloka">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br>निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥</p>
+                        <p class="blessing-meaning">May the divine grace of elders bring love, peace, and eternal prosperity.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Kids / Relatives Block (बाल मनुहार) -->
+        <div class="kids-block reveal-up">
+            <div class="kids-header">
+                <div class="kids-icon-wrap">
+                    <img src="Assets/Kids.png" alt="Children" class="kids-icon">
+                </div>
+                <h3>Blessings from the Little Ones</h3>
+            </div>
+
+            <div class="kids-row">
+                <div class="kids-group">
+                    <div class="kids-group-header">
+                        <i class="fas fa-child"></i>
+                        <span class="kids-group-title">भतीजे एवं भतीजियाँ (Nephews &amp; Nieces)</span>
+                    </div>
+                    <div class="kids-names">
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> पृथ्वी</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Athiksh</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Kanishka</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Duggu</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Khushi</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Bhumi</span>
+                    </div>
+                </div>
+
+                <div class="kids-divider-v"></div>
+
+                <div class="kids-group">
+                    <div class="kids-group-header">
+                        <i class="fas fa-child-reaching"></i>
+                        <span class="kids-group-title">भांजे एवं भाँजियाँ (Maternal Nephews &amp; Nieces)</span>
+                    </div>
+                    <div class="kids-names">
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> आरव</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Nandini</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Nishthu</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Keshav</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Atharv</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Madhav</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Nitya</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Akshat</span>
+                        <span class="kid-pill"><i class="fas fa-sparkles"></i> Advik</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Wedding Events Timeline -->
+    <section id="events" class="events-section">
+        <h2 class="section-title">Wedding Ceremonies</h2>
+        <div class="events-grid">
+            <!-- Haldi -->
+            <div class="event-card reveal-up">
+                <div class="event-img-container">
+                    <img src="Assets/Haldi Ceremony.png" alt="Haldi" class="event-img">
+                    <div class="event-icon"><i class="fas fa-sun"></i></div>
+                </div>
+                <div class="event-details">
+                    <h3>Haldi Ceremony</h3>
+                    <p><i class="far fa-calendar-alt"></i> 12 December 2026</p>
+                    <p><i class="far fa-clock"></i> 10:00 AM</p>
+                    <button class="add-calendar-btn" onclick="addToCalendar('Haldi Ceremony', '2026-12-12 10:00', 'Nature Resort, Kamla Nagar, Agra')">Add to Calendar</button>
+                </div>
+            </div>
+            <!-- Mehendi -->
+            <div class="event-card reveal-up">
+                <div class="event-img-container">
+                    <img src="Assets/Mehendi Ceremony.png" alt="Mehendi" class="event-img">
+                    <div class="event-icon"><i class="fas fa-leaf"></i></div>
+                </div>
+                <div class="event-details">
+                    <h3>Mehendi Ceremony</h3>
+                    <p><i class="far fa-calendar-alt"></i> 12 December 2026</p>
+                    <p><i class="far fa-clock"></i> 05:00 PM</p>
+                    <button class="add-calendar-btn" onclick="addToCalendar('Mehendi Ceremony', '2026-12-12 17:00', 'Nature Resort, Kamla Nagar, Agra')">Add to Calendar</button>
+                </div>
+            </div>
+            <!-- Mahila Sangeet -->
+            <div class="event-card reveal-up">
+                <div class="event-img-container">
+                    <img src="Assets/Mahila Sangeet.png" alt="Mahila Sangeet" class="event-img">
+                    <div class="event-icon"><i class="fas fa-music"></i></div>
+                </div>
+                <div class="event-details">
+                    <h3>Mahila Sangeet</h3>
+                    <p><i class="far fa-calendar-alt"></i> 15 December 2026</p>
+                    <p><i class="far fa-clock"></i> 12:00 PM</p>
+                    <button class="add-calendar-btn" onclick="addToCalendar('Mahila Sangeet', '2026-12-15 12:00', 'Nature Resort, Kamla Nagar, Agra')">Add to Calendar</button>
+                </div>
+            </div>
+            <!-- Baraat -->
+            <div class="event-card reveal-up">
+                <div class="event-img-container">
+                    <img src="Assets/Baraat Celebration.png" alt="Baraat" class="event-img">
+                    <div class="event-icon"><i class="fas fa-drum"></i></div>
+                </div>
+                <div class="event-details">
+                    <h3>Baraat Celebration</h3>
+                    <p><i class="far fa-calendar-alt"></i> 13 December 2026</p>
+                    <p><i class="far fa-clock"></i> 05:00 PM</p>
+                    <button class="add-calendar-btn" onclick="addToCalendar('Baraat Celebration', '2026-12-13 17:00', 'Nature Resort, Kamla Nagar, Agra')">Add to Calendar</button>
+                </div>
+            </div>
+            <!-- Wedding -->
+            <div class="event-card reveal-up">
+                <div class="event-img-container">
+                    <img src="Assets/Wedding Ceremony.png" alt="Wedding Ceremony" class="event-img">
+                    <div class="event-icon"><i class="fas fa-ring"></i></div>
+                </div>
+                <div class="event-details">
+                    <h3>Wedding Ceremony</h3>
+                    <p><i class="far fa-calendar-alt"></i> 13 December 2026</p>
+                    <p><i class="far fa-clock"></i> 07:00 PM</p>
+                    <button class="add-calendar-btn" onclick="addToCalendar('Wedding Ceremony', '2026-12-13 19:00', 'Nature Resort, Kamla Nagar, Agra')">Add to Calendar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Venue Section -->
+    <section id="venue" class="venue-section">
+        <h2 class="section-title">The Grand Venue</h2>
+        <div class="venue-container reveal-scale">
+            <div class="venue-image">
+                <img src="Assets/Venu.jpg" alt="Nature Resort Agra">
+            </div>
+            <div class="venue-map">
+                <img src="Assets/venu_icon.png" alt="Icon" style="width: 50px; margin-bottom: 20px;">
+                <h3>Nature Resort</h3>
+                <p>Kamla Nagar, Agra, Uttar Pradesh</p>
+                <div class="map-placeholder">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.0!2d78.0081!3d27.1767!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397471e4d0a80987%3A0x6bec0f81dd66f9c8!2sKamla%20Nagar%2C%20Agra%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1698765432100!5m2!1sen!2sin"
+                        width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+                <a href="https://share.google/LSQ9nBUOV7DOGBi5E" target="_blank" class="directions-btn">
+                    <i class="fas fa-map-marker-alt"></i> Get Directions
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Contact Us</h2>
+        <p class="contact-intro reveal-up">For any queries or assistance, feel free to reach out to us directly.</p>
+        <div class="contact-grid">
+
+            <!-- Contact 1 -->
+            <div class="contact-card reveal-up">
+                <div class="contact-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="contact-info">
+                    <span class="contact-role">Groom's Father</span>
+                    <h3 class="contact-name">Mr. N.S. Chauhan</h3>
+                    <p class="contact-number"><i class="fas fa-phone-alt"></i> +91 95288 31427</p>
+                </div>
+                <div class="contact-actions">
+                    <a href="tel:+919528831427" class="contact-btn contact-call" title="Call">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Call</span>
+                    </a>
+                    <a href="https://wa.me/919528831427" target="_blank" class="contact-btn contact-wa" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact 2 -->
+            <div class="contact-card reveal-up">
+                <div class="contact-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="contact-info">
+                    <span class="contact-role">Groom's Brother</span>
+                    <h3 class="contact-name">Ravi Chauhan</h3>
+                    <p class="contact-number"><i class="fas fa-phone-alt"></i> +91 95488 46946</p>
+                </div>
+                <div class="contact-actions">
+                    <a href="tel:+919548846946" class="contact-btn contact-call" title="Call">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Call</span>
+                    </a>
+                    <a href="https://wa.me/919548846946" target="_blank" class="contact-btn contact-wa" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact 3 -->
+            <div class="contact-card reveal-up">
+                <div class="contact-avatar bride-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="contact-info">
+                    <span class="contact-role">Bride's Family</span>
+                    <h3 class="contact-name">Mr. Vikrant Sisodiya</h3>
+                    <p class="contact-number"><i class="fas fa-phone-alt"></i> +91 91490 99973</p>
+                </div>
+                <div class="contact-actions">
+                    <a href="tel:+919149099973" class="contact-btn contact-call" title="Call">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Call</span>
+                    </a>
+                    <a href="https://wa.me/919149099973" target="_blank" class="contact-btn contact-wa" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 7. Footer -->
+    <footer class="footer">
+        <div class="signature">With love, Vivek & Manisha</div>
+        <p class="copyright">&copy; 2026 • Designed with ❤️ for the Royal Couple</p>
+
+        <!-- SK Graphics Branding Credit -->
+        <div class="creator-branding">
+            <span class="branding-badge">Crafted with Passion by</span>
+            <div class="branding-content">
+                <span class="branding-name"><i class="fas fa-paint-brush"></i> SK Graphics</span>
+                <span class="branding-sep">•</span>
+                <a href="tel:+919058779588" class="branding-link" title="Call SK Graphics">
+                    <i class="fas fa-phone-alt"></i> 9058779588
+                </a>
+                <span class="branding-sep">•</span>
+                <a href="https://wa.me/919058779588?text=Hello%20SK%20Graphics,%20I%20loved%20the%20Vivek%20%26%20Manisha%20wedding%20invitation%20website!" target="_blank" class="branding-link branding-wa" title="WhatsApp SK Graphics">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
