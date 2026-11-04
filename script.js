@@ -115,12 +115,12 @@ window.addEventListener('resize', resize);
 resize();
 
 class Petal {
-    constructor() {
-        this.reset();
+    constructor(initial = false) {
+        this.reset(initial);
     }
-    reset() {
+    reset(initial = false) {
         this.x = Math.random() * canvas.width;
-        this.y = -20 - Math.random() * 100;
+        this.y = initial ? Math.random() * canvas.height : -20 - Math.random() * 100;
         this.size = Math.random() * 8 + 4;
         this.speedY = Math.random() * 1.5 + 0.5;
         this.speedX = Math.random() * 1 - 0.5;
@@ -148,7 +148,7 @@ class Petal {
 }
 
 function init() {
-    particles = Array.from({ length: particleCount }, () => new Petal());
+    particles = Array.from({ length: particleCount }, () => new Petal(true));
 }
 
 function animate() {
@@ -264,27 +264,19 @@ themeBtn.addEventListener('click', () => {
     themeBtn.innerHTML = isNight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 });
 
-// 5. Calendar Integration
+// 5. Calendar Integration (Direct redirect to Calendar)
 function addToCalendar(title, startStr, location) {
-    const startDate = new Date(startStr);
+    const istStr = startStr.includes('T') ? startStr : startStr.replace(' ', 'T') + ':00+05:30';
+    const startDate = new Date(istStr);
     const endDate = new Date(startDate.getTime() + 120 * 60000); // +2 hours
 
-    const isoDate = (d) => d.toISOString().replace(/-|:|\.\d+/g, "");
-    
-    const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:${title} - Vivek & Manisha Wedding
-DTSTART:${isoDate(startDate)}
-DTEND:${isoDate(endDate)}
-LOCATION:${location}
-DESCRIPTION:Join us for the celebration of Vivek & Manisha's wedding!
-END:VEVENT
-END:VCALENDAR`;
+    const formatGCal = (d) => d.toISOString().replace(/-|:|\.\d+/g, "");
 
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${title.replace(/\s+/g, '_')}.ics`;
-    link.click();
+    const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+        '&text=' + encodeURIComponent(`${title} - Vivek & Manisha Wedding`) +
+        '&dates=' + formatGCal(startDate) + '/' + formatGCal(endDate) +
+        '&details=' + encodeURIComponent("Join us to celebrate the wedding of Vivek & Manisha!") +
+        '&location=' + encodeURIComponent(location);
+
+    window.open(url, '_blank');
 }
